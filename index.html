@@ -1,0 +1,553 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title> Unifying Cloud | Ideaposter</title>
+
+    <!-- slider JS files -->
+    <script class="rs-file" src="assets/royalslider/jquery-1.8.3.min.js"></script>
+    <script class="rs-file" src="assets/royalslider/jquery.royalslider.min.js"></script>
+    <script class="rs-file" src="assets/royalslider/jquery.royalslider.min.js"></script>
+    <link class="rs-file" href="assets/royalslider/royalslider.css" rel="stylesheet">
+
+    <script class="rs-file" src="assets/jquery.mobile-1.3.0.css"></script>
+
+
+    <!-- syntax highlighter -->
+    <script src="assets/preview-assets/js/highlight.pack.js"></script>
+    <script src="assets/preview-assets/js/jquery-ui-1.8.22.custom.min.js"></script>
+    <script> hljs.initHighlightingOnLoad();</script>
+    <script>
+
+
+
+        var Info =
+        {
+            id: null,
+            result: null
+        }
+        $(function () {
+            var url = 'https://spreadsheets.google.com/feeds/list/1RAeJ_o79b3bNa_jZsRE81PYlmP_3gjh8b-DJbomNCW8/od6/public/values?alt=json-in-script&callback=importGSS';
+            $.ajax({
+                url: url,
+                dataType: "jsonp",
+                async: true,
+                jsonpCallback: 'importGSS',
+                success: function (result) {
+                    // alert('hello');
+                    ajax.parseJSONP(result);
+
+                    jQuery.rsCSS3Easing.easeOutBack = 'cubic-bezier(0.175, 0.885, 0.320, 1.275)';
+                    $('#slider-with-blocks-1').royalSlider({
+                        arrowsNav: true,
+                        arrowsNavAutoHide: false,
+                        fadeinLoadedSlide: false,
+                        controlNavigationSpacing: 0,
+                        controlNavigation: 'none',
+                        imageScaleMode: 'none',
+                        imageAlignCenter: false,
+                        blockLoop: true,
+                        loop: true,
+                        numImagesToPreload: 6,
+
+                        transitionType: 'fade',
+                        keyboardNavEnabled: true,
+                        block: {
+                            delay: 400
+                        }
+                    });
+                    jQuery.rsCSS3Easing.easeOutBack = 'cubic-bezier(0.885, 0.885, 0.320, 1.275)';
+                    $('#slider-with-blocks-2').royalSlider({
+                        arrowsNav: true,
+                        arrowsNavAutoHide: false,
+                        fadeinLoadedSlide: false,
+                        controlNavigationSpacing: 0,
+                        controlNavigation: 'none',
+                        imageScaleMode: 'none',
+                        imageAlignCenter: false,
+                        blockLoop: true,
+                        loop: true,
+                        numImagesToPreload: 6,
+                        slidesOrientation: 'vertical',
+                        transitionType: 'Top',
+                        keyboardNavEnabled: true,
+                        block: {
+                            delay: 400
+                        }
+                    });
+                },
+                error: function (request, error) {
+                    alert('Network error has occurred please try again!');
+                }
+            }); //$.ajax({
+
+
+
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+
+
+            var ajax = {
+                parseJSONP: function (result) {
+                    // console.log(result.feed.entry[0].email.$t);
+                    Info.result = result.feed.entry;
+                    $.each(result.feed.entry, function (id, row) {
+                        // console.log(JSON.stringify(row['gsx$title']['$t'] ));
+                        // $('#TitleBox').append('<div data-filtertext="' + row['gsx$title']['$t'] + '"><a href="#" data-desc='+ JSON.stringify(row['gsx$description']['$t'] ) +' data-id=' + id + ' > <h3>' + row['gsx$title']['$t'] + '</h3> </a> </div>');
+                        $('#slider-with-blocks-1').append('<div class="rsContent slide' + getRandomInt(1, 3) + '"><div class="bContainer"> <strong class="rsABlock txtCent blockSubHeadline" data-move-effect="none">' + row['gsx$title']['$t'] + '</strong> <span class="rsABlock txtCent" data-move-effect="none">' + row['gsx$description']['$t'] + '  </span>     </div>   </div>');
+
+               
+                        $('#slider-with-blocks-2').append('<div class="rsContent slide' + getRandomInt(1, 3) + '"><div class="bContainer"> <strong class="rsABlock txtCent blockSubHeadline" data-move-effect="none">' + row['gsx$nexttitle']['$t'] + '</strong> <span class="rsABlock txtCent" data-move-effect="none">' + row['gsx$nextdescription']['$t'] + '  </span>     </div>   </div>');
+
+
+                    });// $.each(result.feed.entry, function(id, row) {
+                    // $('#viewList').listview('refresh');
+                }
+            }// var ajax = {
+
+
+
+        });//$(function() {
+
+        /*
+* jQuery Mobile Slide Menu 1.0.0, jQuery Mobile plugin
+* https://github.com/donwalter/jquery-mobile-slide-menu
+*
+* Copyright(c) 2013, Don Walter
+* http://www.don-walter.com/
+*
+* A side aligned sliding menu for jQuery Mobile
+* Licensed under the MIT License
+*/
+
+        (function ($) {
+            $.fn.slideMenu = function (options) {
+                // If options exist, merge them with the default settings
+                options = $.extend({
+                    duration: 500,
+                    easing: 'swing'
+                }, options);
+
+                return this.each(function () {
+                    var obj = $(this);
+
+                    var menuStatus = false;
+
+                    $(document).on('click', 'a.showMenu', function (e) {
+                        if (!menuStatus) {
+                            $('#side-menu').css('visibility', 'visible');
+                            $('.ui-page-active').animate({
+                                marginLeft: '165px',
+                            }, options.duration, options.easing, function () { menuStatus = true });
+                            return false;
+                        } else {
+                            $('.ui-page-active').animate({
+                                marginLeft: '0px',
+                            }, options.duration, options.easing, function () { menuStatus = false });
+                            return false;
+                        }
+                    });
+
+                    $(document).on('swipeleft', '.pages', function (e) {
+                        if (menuStatus) {
+                            $('.ui-page-active').animate({
+                                marginLeft: '0px',
+                            }, options.duration, options.easing, function () { menuStatus = false; $('#side-menu').css('marginTop', $(window).scrollTop()); });
+                        }
+                    });
+
+                    $(document).on('swiperight', '.pages', function (e) {
+                        if (!menuStatus) {
+                            //alert($(window).scrollTop() + ' - ' + $('#side-menu').offset().top);
+                            $('#side-menu').css('marginTop', $(window).scrollTop());
+                            $('#side-menu').css('visibility', 'visible');
+                            $('.ui-page-active').animate({
+                                marginLeft: '165px',
+                            }, options.duration, options.easing, function () { menuStatus = true });
+                        }
+                    });
+
+                    $('#side-menu li a').click(function () {
+                        var p = $(this).parent();
+                        if ($(p).hasClass('active')) {
+                            $('#side-menu li').removeClass('active');
+                        } else {
+                            $('#side-menu li').removeClass('active');
+                            $(p).addClass('active');
+                        }
+                        menuStatus = false;
+                    });
+                });
+            };
+        })(jQuery);
+
+    </script>
+    <!-- preview-related stylesheets -->
+    <link href="assets/preview-assets/css/reset.css" rel="stylesheet">
+
+
+    <link class="rs-file" href="assets/royalslider/skins/minimal-white/rs-minimal-white.css" rel="stylesheet">
+
+
+    <!-- slider css -->
+    <style>
+        * {
+    padding: 0px;
+    margin: 0px;
+}
+
+#menubar {
+    width:100%;
+    background-color:#444;
+    color: #fff;
+    padding: 10px;
+}
+
+#button {
+    cursor:pointer;
+}
+
+#menu, #right {
+    display:inline;
+}
+
+#menu li a {
+    padding: 10px;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+#right {
+    width:100%;
+    background-color: #fff;
+    z-index: 5;
+    position: fixed;
+    left: 0px;
+    height: 100%;
+    -webkit-box-shadow:  -5px 0px 4px 0px rgba(0, 0, 0, 0.2);
+        moz-box-shadow:  -5px 0px 4px 0px rgba(0, 0, 0, 0.2);
+          o-box-shadow:  -5px 0px 4px 0px rgba(0, 0, 0, 0.2);
+            box-shadow:  -5px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+#right p {
+    padding: 10px;
+}
+
+#menu {
+    float:left;
+    width: 350px;
+    height: 100%;
+}
+
+#menu li {
+    background-color:#444;
+    border-bottom: 1px solid #888;
+}
+
+
+
+
+        #slider-with-blocks-1,#slider-with-blocks-2 {
+            width: 100%;
+            height: 400px;
+        }
+
+        .rsContent {
+            color: #FFF;
+            font-size: 24px;
+            line-height: 32px;
+            float: left;
+        }
+
+        .bContainer {
+            position: relative;
+        }
+
+        .rsABlock {
+            position: relative;
+            display: block;
+            left: auto;
+            top: auto;
+        }
+
+        .blockHeadline {
+            font-size: 42px;
+            line-height: 50px;
+        }
+
+        .blockSubHeadline {
+            font-size: 32px;
+            line-height: 40px;
+        }
+
+        .txtCent {
+            text-align: center;
+            vertical-align: middle;
+            width: 100%;
+        }
+
+        .slide1 {
+            background: #f06b50;
+        }
+
+            .slide1 .bContainer {
+                top: 36%;
+            }
+
+        .slide2 {
+            background: #ffbc11;
+            color: #000;
+        }
+
+            .slide2 .bContainer {
+                top: 24px;
+            }
+
+            .slide2 .txtCent {
+                line-height: 44px;
+                vertical-align: middle;
+            }
+
+            .slide2 .blockHeadline {
+                line-height: 66px;
+            }
+
+        .slide3 {
+            background: #45aab8;
+            color: #FFF;
+        }
+
+            .slide3 .bContainer {
+                top: 24px;
+            }
+
+            .slide3 span {
+                line-height: 44px;
+            }
+
+            .slide3 .txtCent {
+                line-height: 44px;
+                vertical-align: middle;
+            }
+
+        .slide4 .bContainer {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: auto;
+            top: 24px;
+        }
+
+        .slide4 .txtCent {
+            line-height: 44px;
+            vertical-align: middle;
+        }
+
+        .photoCopy {
+            position: absolute;
+            line-height: 24px;
+            font-size: 12px;
+            background: black;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 0px 10px;
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            top: auto;
+            border-radius: 2px;
+            z-index: 25;
+        }
+
+            .photoCopy a {
+                color: #FFF;
+            }
+
+        .palmImg {
+            left: 0;
+            top: auto;
+            bottom: -60px;
+            position: absolute;
+        }
+
+
+        @media screen and (min-width: 0px) and (max-width: 960px) {
+            .rsContent {
+                font-size: 22px;
+                line-height: 28px;
+            }
+
+            .blockHeadline {
+                font-size: 32px;
+                line-height: 32px;
+            }
+
+            .blockSubHeadline {
+                font-size: 26px;
+                line-height: 32px;
+            }
+        }
+
+        @media screen and (min-width: 0px) and (max-width: 500px) {
+            .royalSlider,
+            .rsOverflow {
+                height: 330px !important;
+            }
+
+            .rsContent {
+                font-size: 18px;
+                line-height: 26px;
+            }
+
+            .blockHeadline {
+                font-size: 24px;
+                line-height: 32px;
+            }
+
+            .blockSubHeadline {
+                font-size: 22px;
+                line-height: 32px;
+            }
+        }
+
+        #fb_login_button {
+            width: 80px;
+        }
+
+            #fb_login_button span,
+            #fb_login_button iframe {
+                . width: 80px !important;
+                height: 25px !important;
+            }
+ 
+        #page-navigation {
+            display: none;
+        }
+
+
+        #side-menu {
+	width: 165px;
+	height: 100%;
+	display: block !important;
+	float: left;
+	visibility: hidden;
+	background-color: #000000;
+}
+#side-menu ul {
+	margin: 0;
+	padding: 0;
+	width: inherit;
+}
+#side-menu ul li {
+	list-style-type: none;
+	margin: 0px 0;
+	/*border-bottom: solid #6d6d6d 1px;*/
+}
+#side-menu ul li a:link, #side-menu ul li a:visited {
+	border-bottom: solid #333 1px;
+	color: #fff;
+	font-size: 14px;
+	font-family: arial;
+	text-decoration: none;
+	width: 165px;
+	display: block;
+	padding: 10px 0px 10px 10px;
+	text-shadow: 0px 1px 1px #000000;
+}
+#side-menu ul li a:hover, #side-menu ul li a:active {
+	background-color: #716f6f;
+}
+#side-menu ul li a:hover span.icon {
+	background-position: 0 -40px !important;
+}
+#side-menu li a span.icon {
+	float: right;
+	width: 21px;
+	height: 20px;
+	background: transparent url('images/menu/menuIconsSprite.png') 0 0 no-repeat;
+	position: relative;
+	right: 20px;
+	top: -2px;
+}
+
+    </style>
+</head>
+<body>
+
+    <div id="side-menu">
+        <ul>
+            <li><a href="/">Main</a><span class="icon"></span></li>
+            <li><a href="/page-2/">Page 2</a><span class="icon"></span></li>
+            <li><a href="/page-3/">Page 3</a><span class="icon"></span></li>
+            <li><a href="/page-4/">Page 4</a><span class="icon"></span></li>
+        </ul>
+    </div>
+    <div data-role="page" id="about-the-band" data-title="Page Title" data-theme="b" class="pages">
+        <div data-role="header" data-theme="b">
+            <a href="#" class="showMenu" data-role="button" data-icon="grid" data-iconpos="notext">Menu</a>
+         
+        </div>
+
+        <div data-role="content">
+ 
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#side-menu').slideMenu();
+        });
+    </script>
+
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=749611728421122&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+    <div class="page wrapper">
+      
+
+
+        <div class="row clearfix">
+
+            <!-- slider code start -->
+            <div class="row clearfix">
+                <div class="col span_6 fwImage">
+                    <div id="slider-with-blocks-1" class="royalSlider rsMinW  ">
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- slider code start -->
+            <div class="row clearfix">
+                <div class="col span_6 fwImage">
+                    <div id="slider-with-blocks-2" class="royalSlider rsMinW  ">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+</body>
+</html>
