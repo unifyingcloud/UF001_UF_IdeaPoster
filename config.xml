@@ -1,0 +1,20 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.unifyingcloud.ideaposter"
+        versionCode = "10" 
+        version     = "4.0.0" >
+ <name>Quotes IdeaPoster</name>
+
+    <description>
+      Quotes for your everyday's life
+    </description>
+
+    <author href="https://build.phonegap.com" email="support@phonegap.com">
+   Unifying cloud
+    </author>
+  <preference name="permissions" value="none" />
+<gap:splash src="splash.png" gap:platform="android" width="320" height="480" />
+</widget>
