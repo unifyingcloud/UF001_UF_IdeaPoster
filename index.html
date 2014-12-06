@@ -55,6 +55,7 @@ function hidePopout() {
     });
 }
  hidePopout() ;
+  
     });
 </script>
 
@@ -84,7 +85,7 @@ function hidePopout() {
                         arrowsNavAutoHide: false,
                         fadeinLoadedSlide: false,
                         controlNavigationSpacing: 0,
-                        controlNavigation: 'none',
+                        controlNavigation: 'bullets',
                         imageScaleMode: 'none',
                         imageAlignCenter: false,
                         blockLoop: true,
@@ -95,7 +96,12 @@ function hidePopout() {
                         keyboardNavEnabled: true,
                         block: {
                             delay: 400
-                        }
+                        },	
+                        autoPlay: {
+    		// autoplay options go gere
+    		enabled: true,
+    		pauseOnHover: true
+    	}
                     });
                     jQuery.rsCSS3Easing.easeOutBack = 'cubic-bezier(0.885, 0.885, 0.320, 1.275)';
                     $('#slider-with-blocks-2').royalSlider({
@@ -103,7 +109,7 @@ function hidePopout() {
                         arrowsNavAutoHide: false,
                         fadeinLoadedSlide: false,
                         controlNavigationSpacing: 0,
-                        controlNavigation: 'none',
+                        controlNavigation: 'tabs',
                          randomizeSlides:true,
                         imageScaleMode: 'none',
                         imageAlignCenter: false,
@@ -111,11 +117,16 @@ function hidePopout() {
                         loop: true,
                         numImagesToPreload: 6,
                         slidesOrientation: 'vertical',
-                        transitionType: 'Top',
+                        transitionType: 'fadeinLoadedSlide',
                         keyboardNavEnabled: true, 
                         block: {
-                            delay: 400
-                        }
+                            delay: 150
+                        },	
+                        autoPlay: {
+                    		// autoplay options go gere
+                    		enabled: true,
+                    		pauseOnHover: true
+                    	}
                     });
                 },
                 error: function (request, error) {
@@ -203,7 +214,7 @@ img {
         #slider-with-blocks-1,#slider-with-blocks-2 {
             padding-left:53px;
             width: 100%;
-            height: 200px;
+            
         }
 
         .rsContent {
@@ -446,6 +457,7 @@ img {
 
 
         <div class="row clearfix">
+            
 
             <!-- slider code start -->
             <div class="row clearfix">
@@ -460,6 +472,7 @@ img {
 
             <!-- slider code start -->
             <div class="row clearfix">
+             
                 <div class="col span_6 fwImage">
                     <div id="slider-with-blocks-2" class="royalSlider rsMinW  ">
 
